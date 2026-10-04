@@ -99,6 +99,7 @@ parser, while the separator still chooses ISO, month-first or day-first interpre
 - **E** — a leading duration: `5 weekdays from now`, `3 days from today`, `2 weeks ago`
 - **F** — a weekday inside a future week: `monday in 3 weeks`, `friday in 2 weeks`
 - **G** — a named moment, once qualified: `tomorrow at 9am`, `next monday`, `last friday`
+- **H** — the span from one moment to another: `9:30 am to 9:44 am`, `jan 1 to now in days`
 
 **An answered moment badges its weekday.** Grammars C and E resolve to a date, and the day of the
 week is the thing a date does not say out loud — so `5 weekdays from now` reads `4 September` under
@@ -153,6 +154,11 @@ Subtracting moments with clock times produces a timespan; `to hours` / `to minut
 selects an elapsed-time unit. Bare clocks in a difference share today's date, so `7:30 - 13:30`
 is `-6 hr` even when one clock has already passed. Date-only differences retain calendar-day counting;
 an explicit hours target measures elapsed time, so a DST day can be 23 or 25 hours.
+
+Grammar H is grammar D written start-first and shares its answer. Both sides read **nearest**, and an
+end that lands before the start moves to its next occurrence when it recurs, so `11pm to 1am` is
+`2 hr` and `dec 25 to jan 1` is `7 days`; an absolute end stays put and answers negative. Both
+sides must parse as moments, which leaves `9am to pst` a zone conversion and `10km to mi` a unit one.
 
 A bare number after a moment takes the unit that moment implies: hours off a clock time
 (`3:45pm + 5` → 8:45 PM), days off a date (`august 5 + 5` → 10 August). It is checked before the
