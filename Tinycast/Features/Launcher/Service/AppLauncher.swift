@@ -13,9 +13,15 @@ enum AppLauncher {
         NSWorkspace.shared.open(url)
     }
 
+    private static let finderBundleID = "com.apple.finder"
+
     @MainActor
     static func showInFinder(_ url: URL) {
         NSWorkspace.shared.activateFileViewerSelecting([url])
+        // With a Settings window open, Finder's own activation request is refused.
+        guard let finder = NSWorkspace.shared.urlForApplication(withBundleIdentifier: finderBundleID)
+        else { return }
+        NSWorkspace.shared.openApplication(at: finder, configuration: NSWorkspace.OpenConfiguration())
     }
 
     /// No AppKit route for Get Info, so this drives Finder over Apple events — seconds when cold.

@@ -436,6 +436,8 @@ caches, TCC grants and login item, so this cannot disturb an installed copy.
 - Learned ranking still surfaces your habitual result for a short query
 - An application row drags onto the Dock and into a Finder window as a copy, never a move, and a
   landed drop hides the palette; a click still launches; no other kind of row drags
+- ⌘↵ reveals the app in Finder and brings Finder forward, including after switching from an open
+  Settings window to another app
 
 ### Hotkeys
 
